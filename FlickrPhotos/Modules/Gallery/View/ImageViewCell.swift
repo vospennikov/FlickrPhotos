@@ -39,8 +39,11 @@ final class ImageViewCell: UICollectionViewCell {
     func loadImage(from model: GalleryCellPresentable, with id: Int) {
         do {
             let resource = try Resource<UIImage>(url: model.url, parce: { return UIImage(data: $0) })
-            dataTask = dataService?.get(resource, isCached: true, id: id, completion: {
-                self.imageView.image = $0
+            dataTask = dataService?.get(resource, isCached: true, id: id, completion: { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.imageView.image = $0
             })
         } catch let error {
             print(error)

@@ -36,7 +36,12 @@ final class GalleryViewBinding: NSObject, GalleryViewInteraction {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        loadData(dataService, settings: settings, text: debugRequest) { self.update(item: $0) }
+        loadData(dataService, settings: settings, text: debugRequest) { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.update(item: $0)
+        }
     }
     
     func update(item: GalleryPresentable) {
@@ -70,7 +75,12 @@ extension GalleryViewBinding: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row >= objects.count - fiveRows && isNeedUpdate {
             isNeedUpdate = false
-            loadData(dataService, settings: settings, page: nextPage, text: debugRequest) { self.update(item: $0) }
+            loadData(dataService, settings: settings, page: nextPage, text: debugRequest) { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.update(item: $0)
+            }
         }
     }
 }
