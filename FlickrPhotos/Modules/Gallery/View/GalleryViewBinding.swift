@@ -10,9 +10,9 @@ import UIKit
 
 final class GalleryViewBinding: NSObject, GalleryViewInteraction {
     private var collectionView: UICollectionView
-
-    private let settings = FlickrSettings()
+    private let settings: NetworkSettings
     private var dataService: DataService
+    
     private let debugRequest = "pentacon six"
     private var objects: [GalleryCellPresentable] = []
     private var currentPage = 0
@@ -26,10 +26,11 @@ final class GalleryViewBinding: NSObject, GalleryViewInteraction {
         return itemsPerRow * 5
     }
     
-    init(with view: UICollectionView, dataService: DataService, itemsPerRow: Int) {
+    init(with view: UICollectionView, dataService: DataService, settings: NetworkSettings, itemsPerRow: Int) {
         self.collectionView = view
         self.itemsPerRow = itemsPerRow
         self.dataService = dataService
+        self.settings = settings
         
         super.init()
         

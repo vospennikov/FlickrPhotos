@@ -14,6 +14,9 @@ final class GalleryCoordinator: Coordinator {
     private lazy var sceneViewController: UIViewController = {
         let controller = GalleryViewController()
         controller.coordinator = self
+        controller.dataService = DataService()
+        controller.settings = FlickrSettings()
+        controller.itemsPerRow = 6
         return controller
     }()
     

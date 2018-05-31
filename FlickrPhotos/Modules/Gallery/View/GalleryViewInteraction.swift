@@ -9,11 +9,11 @@
 import UIKit
 
 protocol GalleryViewInteraction: NetworkService {
-    func loadData(_ service: DataService, settings: FlickrSettings, page: Int, text: String, with completion: @escaping (GalleryPresentable) -> Void)
+    func loadData(_ service: DataService, settings: NetworkSettings, page: Int, text: String, with completion: @escaping (GalleryPresentable) -> Void)
 }
 
 extension GalleryViewInteraction {
-    func loadData(_ service: DataService, settings: FlickrSettings, page: Int = 1, text: String, with completion: @escaping (GalleryPresentable) -> Void) {
+    func loadData(_ service: DataService, settings: NetworkSettings, page: Int = 1, text: String, with completion: @escaping (GalleryPresentable) -> Void) {
         guard let resource = SearchPhoto.resource(apiKey: settings.key, endPoint: settings.endPoint, page: page, text: text) else {
             return
         }

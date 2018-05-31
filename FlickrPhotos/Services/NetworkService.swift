@@ -10,6 +10,11 @@ import Foundation
 
 typealias JSONDictionary = [String: AnyObject]
 
+protocol NetworkSettings {
+    var endPoint: URL { get }
+    var key: String { get }
+}
+
 enum Result<T> {
     case success(T)
     case error(AppError)

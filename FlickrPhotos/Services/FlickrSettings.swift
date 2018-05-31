@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FlickrSettings {
+struct FlickrSettings: NetworkSettings {
     var endPoint = URL(string: "https://api.flickr.com/services/rest/")!
     var key = "2355f0dffa2f14bc596b723183fd1220"
 }

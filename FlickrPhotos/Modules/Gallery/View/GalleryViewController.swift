@@ -10,12 +10,13 @@ import UIKit
 
 final class GalleryViewController: UIViewController, GalleryViewInteraction {
     var coordinator: Coordinator?
+    var dataService: DataService?
+    var settings: NetworkSettings?
+    var itemsPerRow: Int?
     private var galleryViewBinding: GalleryViewBinding?
-    private var dataService = DataService()
-    private var itemsPerRow = 6
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
-        return UICollectionViewFlowLayout(parentViewSize: view.bounds.size, itemsPerRow: itemsPerRow)
+        return UICollectionViewFlowLayout(parentViewSize: view.bounds.size, itemsPerRow: itemsPerRow ?? 0)
     }()
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
@@ -33,7 +34,14 @@ final class GalleryViewController: UIViewController, GalleryViewInteraction {
         super.viewDidLoad()
         
         view.addSubview(collectionView)
-        galleryViewBinding = GalleryViewBinding(with: collectionView, dataService: dataService, itemsPerRow: itemsPerRow)
+        
+        guard let dataService = dataService, let settings = settings, let itemsPerRow = itemsPerRow else {
+            return
+        }
+        galleryViewBinding = GalleryViewBinding(with: collectionView,
+                                                dataService: dataService,
+                                                settings: settings,
+                                                itemsPerRow: itemsPerRow)
     }
     
     override func viewWillLayoutSubviews() {
